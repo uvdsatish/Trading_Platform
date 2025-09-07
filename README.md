@@ -13,6 +13,9 @@ A comprehensive Python-based algorithmic trading and market analysis platform fo
 - **Plurality-WAMRS System**: Proprietary relative strength analysis
 - **Industry Group Analysis**: Sector rotation and strength tracking
 - **Breakout Detection**: Multi-timeframe breakout scanners
+- **RunAway Strategy**: Momentum-based trading system with historical backtesting
+- **Key Indicators Population**: Automated technical indicator calculations with Spark support
+- **Daily Technical Criteria**: Screening system for daily trading opportunities
 
 ### 🔍 Market Internals
 - **Hindenburg Omen**: Market crash prediction indicator
@@ -23,6 +26,9 @@ A comprehensive Python-based algorithmic trading and market analysis platform fo
 - **Performance Analysis**: Comprehensive backtesting and trade evaluation
 - **Price Level Scanner**: Support/resistance identification
 - **Risk Management**: ATR-based stops and position sizing
+- **Trade Logging**: Pre and post-trade analysis and metadata tracking
+- **Drawdown/Runup Analysis**: Risk assessment and visualization tools
+- **Price Movement Calculators**: Multiple versions for different analysis needs
 
 ## Project Structure
 
@@ -70,6 +76,13 @@ pip install -r requirements.txt
 ### Technical Analysis
 - **Plurality-RS-upload.py**: Relative strength calculations
 - **breakout_scanner.py**: Breakout detection system
+- **RunAway.py**: Current momentum trading strategy
+- **RunAway-historical.py**: Historical backtesting for RunAway strategy
+- **Daily_Tech_Criteria.py**: Daily technical screening criteria
+- **Key_Indicators_population/**: Technical indicator calculation modules with Spark support
+- **Performance_analysis/**: SPY and ticker performance analysis tools
+- **TradeLog_Pre.py / TradeLog_Post.py**: Trade analysis and logging
+- **drawdown_runup_graph.py**: Risk visualization tools
 
 ### Market Internals
 - **HindenburgOmen_model.py**: Market crash indicator
@@ -87,6 +100,18 @@ python Data_Management/Combined_iqfeed_upload.py
 ```python
 # Scan for 52-week breakouts
 python Utils/breakout_scanner.py
+```
+
+### Run RunAway Strategy
+```python
+# Execute momentum trading strategy
+python Technicals/RunAway.py
+```
+
+### Calculate Key Indicators
+```python
+# Populate technical indicators with Spark
+python Technicals/Key_Indicators_population/KeyIndicatorsPopulation_Delta_Spark.py
 ```
 
 ### Calculate Hindenburg Omen
