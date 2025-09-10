@@ -12,11 +12,16 @@ This trading platform is undergoing a comprehensive **Object-Oriented Architectu
 - **Logging & Error Handling**: Structured JSON logging with domain-specific exception hierarchy
 - **Dependency Injection**: Full DI container with automatic dependency resolution
 
-### 🚧 Current Phase: Phase 1, Week 2 - Domain Models & Base Classes (IN PROGRESS)
-- Domain entities and value objects
-- Repository patterns for data access  
-- Domain services and specifications
-- Domain events and messaging
+### ✅ Phase 1, Week 2 - Domain Models & Base Classes (95% COMPLETED)
+- **Domain Entities**: Complete business entities (Ticker, OHLCV, Order, Position, Portfolio, Indicator, Signal, Strategy)
+- **Value Objects**: Immutable domain values (Price, Money, Quantity, IndicatorValue, SignalCondition, etc.)
+- **Specifications**: Business rule objects for querying and filtering domain entities
+- **Domain Events**: Event-driven architecture for cross-domain communication
+
+### 🚧 Current Phase: Phase 1, Week 2 - Final Components (IN PROGRESS)
+- Repository patterns for data access (next)
+- Domain services implementation
+- Unit testing framework
 
 ## New OOP Architecture
 
@@ -46,11 +51,12 @@ src/
 │   └── exceptions/                 # Domain-specific exception hierarchy
 │       ├── base.py                 # TradingPlatformError base classes
 │       └── domain.py               # MarketDataError, TradingError, etc.
-└── domain/                        # Domain models (coming next)
-    ├── market_data/               # Market data entities
-    ├── trading/                   # Trading domain models
-    ├── technical_analysis/        # Technical analysis models
-    └── backtesting/               # Backtesting domain models
+└── domain/                        # Domain models (95% COMPLETE)
+    ├── shared/                    # Base domain classes (Entity, ValueObject, Specification)
+    ├── market_data/               # Market data entities (Ticker, OHLCV, Quote, MarketSession)
+    ├── trading/                   # Trading domain (Order, Position, Portfolio, Trade, Account)
+    ├── technical_analysis/        # Technical analysis (Indicator, Signal, Strategy, Pattern)
+    └── backtesting/               # Backtesting domain models (future)
 ```
 
 ### Usage Examples
@@ -97,6 +103,24 @@ class MarketDataService:
         self.logger = logger
 
 service = container.resolve(MarketDataService)  # Auto-injected dependencies
+```
+
+#### Domain Models Usage
+```python
+# Modern domain-driven approach replaces scattered scripts
+from src.domain.market_data import Ticker, OHLCV, TickerId
+from src.domain.trading import Order, Position, Portfolio, OrderType, OrderSide
+from src.domain.technical_analysis import Strategy, Signal, Indicator, IndicatorType
+
+# Create domain objects with built-in validation
+ticker = Ticker(id=TickerId("AAPL"), symbol="AAPL", company_name="Apple Inc")
+strategy = Strategy(id=StrategyId("runaway"), name="RunAway Momentum Strategy")
+
+# Business logic in domain objects
+if ticker.is_listed():
+    signal = strategy.generate_signal(market_data)
+    if signal.is_bullish() and signal.strength.is_strong():
+        order = portfolio.place_order(ticker_id, OrderSide.BUY, quantity)
 ```
 
 ## Legacy Commands (Being Migrated)
@@ -270,11 +294,11 @@ flake8 src/ tests/
 - [x] Logging and Error Handling
 - [x] Dependency Injection Container
 
-### Phase 2: Domain Models (Next)
-- [ ] Market Data domain models
-- [ ] Trading domain models  
-- [ ] Technical Analysis domain models
-- [ ] Repository patterns
+### Phase 2: Domain Models ✅ 95% COMPLETED
+- [x] Market Data domain models (Ticker, OHLCV, Quote, MarketSession + value objects & specifications)
+- [x] Trading domain models (Order, Position, Portfolio, Trade, Account + value objects & specifications)
+- [x] Technical Analysis domain models (Indicator, Signal, Strategy, Pattern + value objects & specifications)
+- [ ] Repository patterns for data access (5% remaining)
 
 ### Phase 3: Service Layer (Future)
 - [ ] Domain services
