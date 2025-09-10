@@ -1,0 +1,148 @@
+# Production environment configuration overrides
+# These settings override the defaults in application.yaml
+
+environment: production
+
+# Production database settings with different hosts/credentials
+database:
+  primary:
+    host: ${PROD_DB_HOST:prod-db-server.example.com}
+    port: 5432
+    name: markets_technicals_prod
+    user: ${PROD_DB_USER:trading_app}
+    password: ${PROD_DB_PASSWORD}
+    
+    # Larger pool for production
+    pool:
+      size: 20
+      max_overflow: 40
+    
+    # Enable SSL in production
+    ssl:
+      enabled: true
+      mode: require
+      ca_cert: /etc/ssl/certs/db-ca.pem
+  
+  technical_analysis:
+    host: ${PROD_DB_HOST:prod-db-server.example.com}
+    port: 5432
+    name: markets_technicals_prod
+    user: ${PROD_DB_USER:trading_app}
+    password: ${PROD_DB_PASSWORD}
+    pool:
+      size: 30
+      max_overflow: 50
+    ssl:
+      enabled: true
+      mode: require
+  
+  internals:
+    host: ${PROD_DB_HOST:prod-db-server.example.com}
+    port: 5432
+    name: markets_internals_prod
+    user: ${PROD_DB_USER:trading_app}
+    password: ${PROD_DB_PASSWORD}
+    pool:
+      size: 15
+      max_overflow: 30
+    ssl:
+      enabled: true
+      mode: require
+  
+  fundamentals:
+    host: ${PROD_DB_HOST:prod-db-server.example.com}
+    port: 5432
+    name: markets_fundamentals_prod
+    user: ${PROD_DB_USER:trading_app}
+    password: ${PROD_DB_PASSWORD}
+    pool:
+      size: 15
+      max_overflow: 30
+    ssl:
+      enabled: true
+      mode: require
+  
+  macro:
+    host: ${PROD_DB_HOST:prod-db-server.example.com}
+    port: 5432
+    name: markets_macro_prod
+    user: ${PROD_DB_USER:trading_app}
+    password: ${PROD_DB_PASSWORD}
+    pool:
+      size: 10
+      max_overflow: 20
+    ssl:
+      enabled: true
+      mode: require
+  
+  plurality:
+    host: ${PROD_DB_HOST:prod-db-server.example.com}
+    port: 5432
+    name: plurality_prod
+    user: ${PROD_DB_USER:trading_app}
+    password: ${PROD_DB_PASSWORD}
+    pool:
+      size: 15
+      max_overflow: 30
+    ssl:
+      enabled: true
+      mode: require
+  
+  backtesting:
+    host: ${PROD_DB_HOST:prod-db-server.example.com}
+    port: 5432
+    name: backtesting_results_prod
+    user: ${PROD_DB_USER:trading_app}
+    password: ${PROD_DB_PASSWORD}
+    pool:
+      size: 10
+      max_overflow: 20
+    ssl:
+      enabled: true
+      mode: require
+
+# Production logging
+logging:
+  level: WARNING
+  
+  file:
+    enabled: true
+    path: /var/log/trading_platform/app.log
+    max_size: 52428800  # 50MB
+    backup_count: 10
+
+# Enable production features
+features:
+  real_time_alerts: true
+  paper_trading: true
+
+# Production API settings
+apis:
+  rest:
+    enabled: true
+    host: 0.0.0.0
+    port: 8000
+    cors_enabled: false
+    rate_limit: 1000
+
+# Production performance settings
+performance:
+  cache:
+    enabled: true
+    ttl: 600
+    max_size: 10000
+  
+  threading:
+    max_workers: 50
+    queue_size: 1000
+
+# Enhanced monitoring for production
+monitoring:
+  metrics:
+    enabled: true
+    export_interval: 30
+  
+  health_check:
+    enabled: true
+    endpoint: /health
+    interval: 10
